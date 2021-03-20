@@ -37,12 +37,13 @@ CREATE TABLE public.article_group (
 CREATE TABLE public.articles (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
-    created_at date NOT NULL,
+    created_at timestamp with time zone NOT NULL,
     author character varying(255),
     written date,
     creator integer NOT NULL,
     source text NOT NULL,
-    hidden boolean
+    hidden boolean,
+    url text
 );
 
 
