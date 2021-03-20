@@ -36,7 +36,7 @@ CREATE TABLE public.article_group (
 
 CREATE TABLE public.articles (
     id integer NOT NULL,
-    name character varying(255) NOT NULL,
+    title character varying(255) NOT NULL,
     created_at timestamp with time zone NOT NULL,
     author character varying(255),
     written date,

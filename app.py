@@ -16,17 +16,33 @@ def index():
 
 @app.route("/articles")
 def get_articles():
-    result = db.session.execute("SELECT name, author, written, url, source, created_at, creator, username FROM articles, users WHERE users.id = articles.creator")
-    print(result.fetchall())
-    return render_template("index.html")
+    result = db.session.execute("""
+        SELECT 
+            title, 
+            author, 
+            written, 
+            url, 
+            source, 
+            created_at, 
+            creator, 
+            username 
+
+        FROM articles, users 
+        WHERE users.id = articles.creator
+        """)
+    print(result)
+    res = result.fetchall()
+    return render_template("index.html", entries=res)
 
 @app.route("/articles/new", methods=["POST"])
 def new_article_send():
     form = request.form
     new = {}
-    new["name"] = "test article"
+    new["title"] = form["title"] 
     new["author"] = form["author"]
     new["written"] = form["written"]
+    if not new["written"]:
+        new["written"] = None
     new["url"] = form["url"]
     new["source"] = form["content"]
     new["created_at"] = datetime.utcnow()
@@ -34,8 +50,26 @@ def new_article_send():
     new["hidden"] = False
 
     sql = """
-        INSERT INTO articles (name, author, written, url, source, created_at, creator, hidden) 
-            VALUES (:name, :author, :written, :url, :source, :created_at, :creator, :hidden)    
+        INSERT INTO articles (
+            title, 
+            author, 
+            written, 
+            url,
+            source, 
+            created_at, 
+            creator, 
+            hidden
+        ) 
+        VALUES (
+            :title, 
+            :author, 
+            :written, 
+            :url, 
+            :source, 
+            :created_at, 
+            :creator, 
+            :hidden
+        )    
           """
     db.session.execute(sql, new)
     db.session.commit()
