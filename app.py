@@ -1,11 +1,13 @@
 from flask import Flask
-from flask import redirect, render_template, request
+from flask import redirect, render_template, request, session
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
+from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
+app.secret_key = getenv("SECRET_KEY")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -13,6 +15,66 @@ db = SQLAlchemy(app)
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/register")
+def register():
+    return render_template("register_form.html")
+
+@app.route("/register", methods=["POST"])
+def register_send():
+    username = request.form["username"]
+    password = request.form["password"]
+
+    hash_value = generate_password_hash(password)
+    sql = "INSERT INTO users (username,password) VALUES (:username,:password)"
+    db.session.execute(sql, {"username":username,"password":hash_value})
+    db.session.commit()
+
+    session["username"] = username
+    return redirect("/")
+
+@app.route("/logout")
+def logout():
+    del session["username"]
+    return redirect("/")
+
+@app.route("/login")
+def login():
+    return render_template("login_form.html")
+
+@app.route("/login", methods=["POST"])
+def login_send():
+    username = request.form["username"]
+    password = request.form["password"]
+
+    sql = "SELECT password FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":username})
+    user = result.fetchone()    
+    if user == None:
+        # TODO: invalid username
+        return redirect("login")
+    else:
+        hash_value = user[0]
+        if check_password_hash(hash_value,password):
+            # TODO: correct username and password
+            session["username"] = username
+        else:
+            # TODO: invalid password
+            return redirect("/login")
+
+    return redirect("/")
+
+
+@app.route("/articles/<int:id>")
+def get_article(id):
+    if not "username" in session:
+        return "not logged in"
+    sql = """
+        SELECT * FROM Users
+        WHERE Users.id = :id
+        """
+    result = db.session.execute(sql, {"id": id})
+    return str(result.fetchone())
 
 @app.route("/articles")
 def get_articles():
