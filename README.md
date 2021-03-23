@@ -21,9 +21,9 @@ Run the following commands in the git repository once you have cloned the projec
 
   `pip install -r requirements.txt`
 
-- Create the file `.env` to store environment variables and add the following line
+- Add database information to environment file
 
-  `DATABASE_URL="postgresql://user"`
+  `echo 'DATABASE_URL="postgresql://user"' >> .env`
 
   **Note**: depending on the configuration of the PostgreSQL database on the local machine, `DATABASE_URL` might need to be in the following form
 
@@ -32,6 +32,12 @@ Run the following commands in the git repository once you have cloned the projec
 - Create the neccessary database tables
 
   `psql < schema.sql`
+
+- Create a secret key to use for storing sessions
+
+  `date | sha256sum | base64 | head -c 70; echo >> .env`
+  
+  **Note**: secret keys can be created in many ways, [here](https://www.tecmint.com/generate-pre-shared-key-in-linux/) are some should the provided example not suffice
 
 - Launch the application with
 
