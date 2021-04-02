@@ -4,6 +4,12 @@
 
 A web application which allows users to retrieve textual content from the internet and save it with their own comments.
 
+  The end user can create an entry, whereupon the user is presented with a view that allows entering the usual metadata (author name, content, date...).
+
+  Alternatively, the user can enter a link to an article, which the application will use to retrieve said article and do its best at extracting the contents.
+
+  In addition to the article entries, a user is allowed to write their own comments and share their posts with other users. Other users will also be able to comment on the text.
+
 
 ### Installation and running
 

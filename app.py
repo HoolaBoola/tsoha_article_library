@@ -98,6 +98,7 @@ def get_articles():
 
 @app.route("/articles/new", methods=["POST"])
 def new_article_send():
+
     form = request.form
     new = {}
     new["title"] = form["title"] 
@@ -140,4 +141,6 @@ def new_article_send():
 
 @app.route("/articles/new")
 def new_article():
+    if not "username" in session:
+        return redirect("/login")   
     return render_template("form_new_article.html")
