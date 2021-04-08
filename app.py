@@ -106,12 +106,15 @@ def get_articles():
 
 @app.route("/articles/new", methods=["POST"])
 def new_article_send():
+    if not "username" in session:
+        return redirect("/login")
 
     form = request.form
     new = {}
     new["title"] = form["title"] 
     new["author"] = form["author"]
     new["written"] = form["written"]
+    new["creator"] = session["username"]
     if not new["written"]:
         new["written"] = None
     new["url"] = form["url"]
