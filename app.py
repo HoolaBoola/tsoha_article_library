@@ -4,6 +4,7 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 from werkzeug.security import check_password_hash, generate_password_hash
+from psycopg2 import errors
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
@@ -23,13 +24,20 @@ def register():
 @app.route("/register", methods=["POST"])
 def register_send():
     username = request.form["username"]
+
+    sql = "SELECT password FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":username})
+    user = result.fetchone()    
+
+    if user:
+        return redirect("/register")
+
     password = request.form["password"]
 
     hash_value = generate_password_hash(password)
     sql = "INSERT INTO users (username,password) VALUES (:username,:password)"
     db.session.execute(sql, {"username":username,"password":hash_value})
     db.session.commit()
-
     session["username"] = username
     return redirect("/")
 
