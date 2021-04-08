@@ -55,17 +55,19 @@ def login_send():
     username = request.form["username"]
     password = request.form["password"]
 
-    sql = "SELECT password FROM users WHERE username=:username"
+    sql = "SELECT id, password FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()    
+
+    print(user)
     if user == None:
         # TODO: invalid username
         return redirect("login")
     else:
-        hash_value = user[0]
+        hash_value = user[1]
         if check_password_hash(hash_value,password):
-            # TODO: correct username and password
             session["username"] = username
+            session["userid"] = user[0]
         else:
             # TODO: invalid password
             return redirect("/login")
@@ -109,18 +111,19 @@ def new_article_send():
     if not "username" in session:
         return redirect("/login")
 
+    print("session:", session)
     form = request.form
     new = {}
     new["title"] = form["title"] 
     new["author"] = form["author"]
     new["written"] = form["written"]
-    new["creator"] = session["username"]
+    new["creator"] = session["userid"]
+    print(new)
     if not new["written"]:
         new["written"] = None
     new["url"] = form["url"]
     new["source"] = form["content"]
     new["created_at"] = datetime.utcnow()
-    new["creator"] = 2
     new["hidden"] = False
 
     sql = """
