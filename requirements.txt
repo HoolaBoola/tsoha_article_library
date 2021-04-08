@@ -8,6 +8,7 @@ dateparser==1.0.0
 Flask==1.1.2
 Flask-SQLAlchemy==2.5.1
 greenlet==1.0.0
+gunicorn==20.1.0
 htmldate==0.8.1
 isort==5.7.0
 itsdangerous==1.1.0
