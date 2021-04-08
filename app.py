@@ -38,7 +38,13 @@ def register_send():
     sql = "INSERT INTO users (username,password) VALUES (:username,:password)"
     db.session.execute(sql, {"username":username,"password":hash_value})
     db.session.commit()
+    
+    sql = "SELECT id ROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":username})
+    user = result.fetchone()    
+
     session["username"] = username
+    session["userid"] = user[0]
     return redirect("/")
 
 @app.route("/logout")
