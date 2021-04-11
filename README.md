@@ -10,6 +10,23 @@ A web application which allows users to retrieve textual content from the intern
 
   In addition to the article entries, a user is allowed to write their own comments and share their posts with other users. Other users will also be able to comment on the text.
 
+### Current status
+
+  At the moment, the following is possible:
+  - Registering a new user
+  - Logging in as an existing user
+  - Creating a post
+  - Logging out
+
+### Testing in Heroku
+
+  A running version of the project can be found at tsoha-article-library.herokuapp.com.
+
+  On the initial page, you are presented with the option to register a user ("Luo uusi käyttäjä") or to login ("Kirjaudu sisään"). For registering in, you need a username and a password. Registering will also automatically log you in with the created account.
+
+  When logged in, the user is presented with the option to post a new post ("Luo uusi"). By entering the needed information and then submitting the form, you can send the post to the server.
+
+  Existing posts can be found by going to "/articles" (this will also later be possible to view from the main page)
 
 ### Installation and running
 

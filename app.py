@@ -157,7 +157,7 @@ def new_article_send():
     db.session.execute(sql, new)
     db.session.commit()
     print(request.form)
-    return redirect("/articles/new")
+    return redirect("/articles")
 
 @app.route("/articles/new")
 def new_article():
