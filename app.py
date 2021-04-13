@@ -39,7 +39,7 @@ def register_send():
     db.session.execute(sql, {"username":username,"password":hash_value})
     db.session.commit()
     
-    sql = "SELECT id ROM users WHERE username=:username"
+    sql = "SELECT id FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()    
 
