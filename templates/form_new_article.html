@@ -1,3 +1,24 @@
+<style>
+.input,
+.textarea {
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 1px 6px;
+}
+
+.textarea {
+  display: block;
+  width: 90%;
+  overflow: hidden;
+  resize: both;
+  min-height: 40px;
+  line-height: 20px;
+}
+
+</style>
+<noscript> Parts of the functionality might not work correctly with JavaScript disabled </noscript>
+
 <form action="/articles/new" method="POST">
   <label for="title"> Title: </label>
   <input type="text" id="title" name="title"/>
@@ -11,11 +32,39 @@
   <br>
   <label for="url"> URL: </label>
   <input type="text" id="url" name="url"/>
+  <button type="button" onClick="getContents()">Load article</button>
 
   <br>
-  <label for="content"> Text: </label>
-  <input type="textarea" id="content" name="content"/>
+  <label for="content"> Text: </label> 
+  <textarea oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"̈́' class="textarea" id="content" name="content">
+  </textarea>
+  <!--<input type="textarea" id="content" name="content"> -->
+  <!--{% if content is defined %}-->
+  <!--{{content}}-->
+  <!--{% endif %}-->
+  <!--</input>-->
+
 
   <br>
   <input type="submit" value="Send"/>
 </form>
+
+<script>
+  function reqListener () {
+    document.getElementById("content").value = this.responseText
+    const textarea = document.getElementById("content")
+    textarea.style.height = "";
+    textarea.style.height = textarea.scrollHeight + 3 + "px"
+  }
+
+function getContents() {
+
+  const url = "/articles/new/get_contents_from_url?url=" + encodeURIComponent(document.getElementById("url").value);
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.addEventListener("load", reqListener);
+  xhttp.open("GET", url, true);
+  xhttp.send();
+
+}
+</script>

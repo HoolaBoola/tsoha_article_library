@@ -7,8 +7,9 @@
 <a href="/login">Kirjaudu sisään</a>
 <a href="/register">Luo uusi käyttäjä</>
 {% endif %}
-
+<br>
+{% import "post_listing.html" as post %}
 {% for entry in entries %}
-{{entry}}
+{{post.postlisting(entry["id"], entry["title"], entry["author"], entry["username"], entry["posterid"], entry["created_at"])}}
 <br>
 {% endfor %}

@@ -41,7 +41,7 @@ CREATE TABLE public.articles (
     author character varying(255),
     written date,
     creator integer NOT NULL,
-    source text NOT NULL,
+    content text NOT NULL,
     hidden boolean,
     url text
 );

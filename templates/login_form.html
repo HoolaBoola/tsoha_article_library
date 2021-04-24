@@ -7,3 +7,9 @@
   <br>
   <input type="submit" value="Login"/>
 </form>
+
+<a href="/register">Luo uusi käyttäjä</a>
+
+  {% if error_msg is defined %}
+  <p> {{ error_msg }} </p>
+  {% endif %}
