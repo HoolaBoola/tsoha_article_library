@@ -55,7 +55,6 @@ def new_post(title, author, written, creator, url, created_at, hidden, content):
     return new_post(post)
 
 def new_post(post):
-    print(post)
     sql = """
         INSERT INTO articles (
             title, 
@@ -85,12 +84,25 @@ def new_post(post):
 
 def get_article(id: int):
     sql = """
-        SELECT * FROM Articles, Users
-        WHERE Articles.id=:id
+        SELECT
+            articles.id,
+            title, 
+            author, 
+            written, 
+            url, 
+            content, 
+            created_at, 
+            creator, 
+            username,
+            users.id
+
+        FROM articles, users 
+        WHERE articles.id = :id
         """
-    result = db.session.execute(sql)
+    result = db.session.execute(sql, {"id": id})
     result = result.fetchone()
-    print(result)
+    result = result_to_article(result)
+    return result
     
 
 def get_articles():
@@ -115,7 +127,6 @@ def get_articles():
     for row in res:
         article = result_to_article(row)
         articles.append(article)
-    print(articles[0])
     return articles
 
 def result_to_article(res):
@@ -131,4 +142,23 @@ def result_to_article(res):
     article["username"] = res[8]
     article["posterid"] = res[9]
     return article
+
+from trafilatura import extract, fetch_url
+import xml.etree.ElementTree as ET
+def trafilatura_get_contents(url):
+    downloaded = fetch_url(url)
+    result = extract(downloaded, output_format="xml")
+
+    if not result:
+        return None
+    
+    root = ET.fromstring(result)
+    date = root.get("date")
+    excerpt = root.get("excerpt")
+    sitename = root.get("sitename")
+    title = root.get("title")
+    main = root.find("main")
+
+    content = ET.tostring(main, encoding="utf-8").decode("utf-8").replace("<main>", "").replace("</main>", "")
+    return {"date": date, "excerpt": excerpt, "sitename": sitename, "title": title, "content": content}
 

@@ -1,0 +1,9 @@
+<h2> {{title}} </h2>
+
+<p> By: {% if author %} {{author}} {% else %} Unknown author {% endif %}</p>
+<p> Published: {% if written %} {{written}} {% else %} - {% endif %}</p>
+<p> Source: {% if url %} <a href="{{url}}"> {{url}} </a> {% else %} - {% endif %} </p>
+<p> Posted by <a href="/users/{{userid}}">{{username}}</a> on {{postdate}} </p>
+
+<hr>
+{{content}}

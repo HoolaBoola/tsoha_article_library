@@ -66,7 +66,9 @@ def get_articles_by_user(id):
 
 @app.route("/articles/post/<int:id>")
 def get_article(id):
-    return redirect("/")
+    res = user.get_article(id)
+    print(res["content"])
+    return render_template("post.html", written=res["written"], title=res["title"], author=res["author"], url=res["url"], username=res["username"], postdate=res["created_at"].date(), userid=res["posterid"], content=res["content"])
 
 @app.route("/articles")
 def get_articles():
@@ -90,7 +92,6 @@ def new_article_send():
     new["created_at"] = datetime.utcnow()
     new["hidden"] = False
 
-
     if user.new_post(new):
         return redirect("/")
 
@@ -110,8 +111,9 @@ def get_contents_from_url():
     if not url:
         return ""
 
-    downloaded = trafilatura.fetch_url(url)
-    result = trafilatura.extract(downloaded, date_extraction_params={"extensive_search": True, "original_date": True}, with_metadata=True, include_formatting=True)
+    result = user.trafilatura_get_contents(url)
     if not result:
         return ""
-    return str(result) 
+
+    return result
+    # return str(result) 
