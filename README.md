@@ -16,7 +16,22 @@ A web application which allows users to retrieve textual content from the intern
   - Registering a new user
   - Logging in as an existing user
   - Creating a post
+    - WYSIWYG (What You See Is What You Get) editor to edit HTML
+    - Functionality to automatically load contents from a URL
+  - Viewing a post
+  - Viewing all posts
   - Logging out
+
+### Todo
+
+  - Visual improvements
+  - Noscript versions of JavaScript functionality
+  - Refactoring
+  - Editing posts
+  - Commenting on posts (we'll see)
+  - Refactoring
+  - HTML sanitization fine tuning
+  - Posts listed newest-first and only a handful per page
 
 ### Testing in Heroku
 
@@ -26,7 +41,7 @@ A web application which allows users to retrieve textual content from the intern
 
   When logged in, the user is presented with the option to post a new post ("Luo uusi"). By entering the needed information and then submitting the form, you can send the post to the server.
 
-  Existing posts can be found by going to "/articles" (this will also later be possible to view from the main page)
+  Existing posts can be found by going to "/articles" (this ~~will also later be possible~~ is now possible to view from the main page as well, or "/")
 
 ### Installation and running
 
