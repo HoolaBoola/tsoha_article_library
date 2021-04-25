@@ -96,10 +96,11 @@ def get_article(id: int):
             content, 
             created_at, 
             creator, 
-            username,
-            users.id
+            username
 
-        FROM articles, users 
+        FROM Articles
+        JOIN Users ON
+            Users.id = Articles.creator
         WHERE articles.id = :id
         """
     result = db.session.execute(sql, {"id": id})
@@ -119,8 +120,7 @@ def get_articles():
             content, 
             created_at, 
             creator, 
-            username,
-            users.id
+            username
 
         FROM articles, users 
         WHERE users.id = articles.creator
@@ -143,7 +143,6 @@ def result_to_article(res):
     article["created_at"] = res[6]
     article["creator"] = res[7]
     article["username"] = res[8]
-    article["posterid"] = res[9]
     return article
 
 from trafilatura import extract, fetch_url

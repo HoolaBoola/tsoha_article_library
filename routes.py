@@ -68,7 +68,7 @@ def get_articles_by_user(id):
 def get_article(id):
     res = user.get_article(id)
     print(res["content"])
-    return render_template("post.html", written=res["written"], title=res["title"], author=res["author"], url=res["url"], username=res["username"], postdate=res["created_at"].date(), userid=res["posterid"], content=res["content"])
+    return render_template("post.html", written=res["written"], title=res["title"], author=res["author"], url=res["url"], username=res["username"], postdate=res["created_at"].date(), userid=res["creator"], content=res["content"])
 
 @app.route("/articles")
 def get_articles():
