@@ -54,7 +54,10 @@ def new_post(title, author, written, creator, url, created_at, hidden, content):
     post["content"] = content
     return new_post(post)
 
+from html_sanitizer import Sanitizer
 def new_post(post):
+    sanitizer = Sanitizer() 
+    post["content"] = sanitizer.sanitize(post["content"])
     sql = """
         INSERT INTO articles (
             title, 

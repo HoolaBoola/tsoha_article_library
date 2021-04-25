@@ -36,7 +36,7 @@
 
 <form id="postForm" action="/articles/new" method="POST">
 
-  <input id="send" type="submit" value="Send"/>
+  <input id="send-1" type="submit" value="Send"/>
   <br>
 
   <label for="url"> URL: </label>
@@ -60,7 +60,7 @@
 
   <input id="content" name="content" type="hidden" value=""></input>
   <br>
-  <input id="send" type="submit" value="Send"/>
+  <input id="send-2" type="submit" value="Send"/>
 </form>
 
 <div id="result"></div>
@@ -71,16 +71,15 @@
   $(document).ready(function() {
     $('#summernote').summernote();
   });
-
-$(function(){
-  $("#send").on("click",function() {
+const updateHiddenInput = function() {
     document.getElementById("content").value = $("#summernote").summernote('code');
-    //$("#content").val($('#summernote').summernote('code').text());
-
-    alert($("#content").val());
 
     $("form#postForm").submit();
-  }); 
+  }
+
+$(function(){
+  $("#send-1").on("click",updateHiddenInput);
+  $("#send-2").on("click",updateHiddenInput);
 });
 function reqListener () {
   if (!this.responseText) {
