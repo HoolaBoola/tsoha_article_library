@@ -21,27 +21,47 @@ A web application which allows users to retrieve textual content from the intern
   - Viewing a post
   - Viewing all posts
   - Logging out
+  - Visual improvements
+  - Editing + deleting posts
+  - HTML sanitization
+  - Posts listed newest-first and pagination works
 
 ### Todo
 
-  - Visual improvements
+  - ~~Visual improvements~~
   - Noscript versions of JavaScript functionality
   - Refactoring
-  - Editing posts
+  - ~~Editing posts~~
   - Commenting on posts (we'll see)
   - Refactoring
-  - HTML sanitization fine tuning
-  - Posts listed newest-first and only a handful per page
+  - ~~HTML sanitization fine tuning~~
+  - ~~Posts listed newest-first and only a handful per page~~
 
 ### Testing in Heroku
 
-  A running version of the project can be found at tsoha-article-library.herokuapp.com.
+  A running version of the project can be found at https://tsoha-article-library.herokuapp.com.
 
-  On the initial page, you are presented with the option to register a user ("Luo uusi käyttäjä") or to login ("Kirjaudu sisään"). For registering in, you need a username and a password. Registering will also automatically log you in with the created account.
+  On the initial page, you are presented with the option to register a user or to login. For registering in, you need a username and a password. Registering will also automatically log you in with the created account.
 
-  When logged in, the user is presented with the option to post a new post ("Luo uusi"). By entering the needed information and then submitting the form, you can send the post to the server.
+  When logged in, the user is presented with the option to post a new post ("Post a new article"). By entering the needed information and then submitting the form, you can send the post to the server.
 
   Existing posts can be found by going to "/articles" (this ~~will also later be possible~~ is now possible to view from the main page as well, or "/")
+
+  Once there are more than 20 posts, "Next page" etc. links will appear at the bottom of the page.
+
+  Creating a post can be done as follows:
+
+  - Click "Post a new article". Several fields are now visible.
+  - If you have an URL from which you wish to load textual content, write the address into the "URL" field. Then click "load article"
+  - After a while, the application fills the fields with its best attempts at gathering the information.
+  - Missing or incorrect information can then be edited
+  - Once the post is in good shape, click "Send"
+
+  You can delete or edit your own posts while logged in from the buttons visible beside the posts. Before deletion, the app will ask for your confirmation.
+
+  You may view your own posts from the "My posts" button at the top row.
+
+  Another user's posts can be viewed by clicking their username from a post (it's a link)
 
 ### Installation and running
 
