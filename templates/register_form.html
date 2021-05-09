@@ -1,16 +1,46 @@
-<form action="/register" method="POST">
-  <label for="username"> Username: </label>
-  <input type="text" id="username" name="username"/>
-  <br>
-  <label for="password">Password: </label>
-  <input type="password" id="password" name="password"/>
-  <br>
-  <input type="submit" value="Register"/>
+<!doctype html>
+{% extends "layout.html" %}
+{% block title %} Register {% endblock %}
 
-</form> 
-<a href="/login">Kirjaudu sisään olemassaolevalla käyttäjällä</a>
+{% block content %}
+
+{% if session["username"] %}
+  <div class="row main-content text-center">
+    <p>Already logged in!</p>
+  </div>
+{% else %}
+
+<div class="row main-content text-center">
+  <div class="">
+    <div class="container-fluid">
+      <div class="row">
+        <h2>Register a new account</h2>
+      </div>
+      <div>
+        <form action="/register" method="POST" class="form-group">
+          <div class="row">
+            <input type="text" name="username" id="username"  placeholder="Username">
+          </div>
+          <div class="row">
+            <input type="password" name="password" id="password" placeholder="Password">
+          </div>
+          <div class="row">
+            <input type="submit" value="Register" class="btn btn-primary">
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <p>Already have an account? <a href="/login">Login here</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+
 {% if error_msg is defined %}
 <p> {{ error_msg }} </p>
 {% endif %}
 
-
+{% endblock %}

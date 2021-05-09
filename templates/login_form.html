@@ -1,15 +1,44 @@
-<form action="/login" method="POST">
-  <label for="username"> Username: </label>
-  <input type="text" id="username" name="username"/>
-  <br>
-  <label for="password">Password: </label>
-  <input type="password" id="password" name="password"/>
-  <br>
-  <input type="submit" value="Login"/>
-</form>
+<!doctype html>
+{% extends "layout.html" %}
+{% block title %} Login {% endblock %}
 
-<a href="/register">Luo uusi käyttäjä</a>
+{% block content %}
 
-  {% if error_msg is defined %}
-  <p> {{ error_msg }} </p>
-  {% endif %}
+{% if session["username"] %}
+<div class="row main-content text-center">
+  <p> Already logged in!</p>
+</div>
+{% else %}
+
+</div><div class="row main-content text-center">
+  <div class="">
+    <div class="container-fluid">
+      <div class="row">
+        <h2>Log In</h2>
+      </div>
+      <div>
+        <form action="login" method="POST" class="form-group">
+          <div class="row">
+            <input type="text" name="username" id="username"  placeholder="Username">
+          </div>
+          <div class="row">
+            <input type="password" name="password" id="password" placeholder="Password">
+          </div>
+          <div class="row">
+            <input type="submit" value="Login" class="btn btn-primary">
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <p>Don't have an account? <a href="/register">Register Here</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% if error_msg is defined %}
+<p> {{ error_msg }} </p>
+{% endif %}
+{% endblock %}

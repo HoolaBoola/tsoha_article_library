@@ -1,3 +1,7 @@
+<!doctype>
+{% extends "layout.html" %}
+{% block title %} New post {% endblock %}
+{% block content %}
 <head>
   <!-- include libraries(jQuery, bootstrap) -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -28,43 +32,66 @@
   line-height: 20px;
 }
 
+input[type=date] {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 2px 2px;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+} 
+
 </style>
 
 
-<noscript> <h3>Parts of the functionality might not work correctly with JavaScript disabled </h3></noscript>
+<div class="row main-content">
+  <noscript> <h3>Parts of the functionality might not work correctly with JavaScript disabled </h3></noscript>
 
 
-<form id="postForm" action="/articles/new" method="POST">
+  <form id="postForm" action="/articles/new" method="POST">
 
-  <input id="send-1" type="submit" value="Send"/>
-  <br>
+    <div>
+      <input class="btn btn-primary col-1" id="send-1" type="submit" value="Send"/>
+    </div>
 
-  <label for="url"> URL: </label>
-  <input type="text" id="url" name="url"/>
-  <button type="button" onClick="getContents()">Load article</button>
-  <span id="error-message"></span>
-  <br> 
+    <div>
+      <label for="url"> URL: </label>
+      <input type="text" id="url" name="url">
+      <button class="btn-primary btn col-2" type="button" onClick="getContents()">Load article</button>
+      <span id="error-message"></span>
+    </div>
 
-  <label for="title"> Title: </label>
-  <input type="text" id="title" name="title"/>
-  <br>
-  <label for="author">Author: </label>
-  <input type="text" id="author" name="author"/>
-  <br>
-  <label for="written"> Date: </label>
-  <input type="date" id="written" name="written"/> 
+    <div>
+      <label for="title"> Title: </label>
+      <input type="text" id="title" name="title"/>
+    </div>
 
-  <br>
+    <div>
+      <label for="author">Author: </label>
+      <input type="text" id="author" name="author"/>
+    </div>
 
-  <div id="summernote"></div>
+    <div>
+      <label for="written"> Date: </label>
+      <input type="date" id="written" name="written"/> 
+    </div>
 
-  <input id="content" name="content" type="hidden" value=""></input>
-  <br>
-  <input id="send-2" type="submit" value="Send"/>
-</form>
+    <div id="summernote"></div>
 
-<div id="result"></div>
+    <input id="content" name="content" type="hidden" value=""></input>
+    <br>
+    <input class="btn btn-primary" id="send-2" type="submit" value="Send"/>
+  </form>
 
+  <div id="result"></div>
+</div>
 <script>
 
 
@@ -72,10 +99,10 @@
     $('#summernote').summernote();
   });
 const updateHiddenInput = function() {
-    document.getElementById("content").value = $("#summernote").summernote('code');
+  document.getElementById("content").value = $("#summernote").summernote('code');
 
-    $("form#postForm").submit();
-  }
+  $("form#postForm").submit();
+}
 
 $(function(){
   $("#send-1").on("click",updateHiddenInput);
@@ -127,3 +154,5 @@ function getContents() {
 
 }
 </script>
+
+{% endblock %}

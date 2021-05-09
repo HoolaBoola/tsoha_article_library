@@ -1,16 +1,21 @@
-{% if session.username %}
-<p>Logged in as {{ session.username }}</p>
-<a href="/logout">Kirjaudu ulos</a>
-<a href="/articles/new">Luo uusi</a>
-{% else %}
-<p>You're not logged in</p>
-<a href="/login">Log in</a>
-<a href="/register">Register a new user</>
-  {% endif %}
-  <br>
-  {% import "post_listing.html" as post %}
-  {% for entry in entries %}
-  <hr>
-  {{post.postlisting(entry["id"], entry["title"], entry["author"], entry["username"], entry["posterid"], entry["created_at"])}}
-  <br>
-  {% endfor %}
+<!doctype html>
+<div class="content">
+  {% extends "layout.html" %}
+  {% block title %} Home page {% endblock %}
+
+  {% block content %}
+  {% if session.username %}
+  <p>Logged in as {{ session.username }}</p>
+  {% else %}
+  <p>You're not logged in</p>
+    {% endif %}
+    <br>
+    {% import "post_listing.html" as post %}
+    {% for entry in entries %}
+    <hr>
+    {{post.postlisting(entry["id"], entry["title"], entry["author"], entry["username"], entry["posterid"], entry["created_at"])}}
+    <br>
+    {% endfor %}
+    {% endblock %}
+</div>
+
