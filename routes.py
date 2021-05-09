@@ -11,8 +11,10 @@ import user
 
 @app.route("/")
 def index():
-    articles = user.get_articles()
-    return render_template("index.html", entries=articles)
+    result = user.get_articles()
+    articles = result[0]
+    last_page = result[2]
+    return render_template("index.html", entries=articles, page=0, last_page=last_page)
 
 @app.route("/register")
 def register():
@@ -55,24 +57,29 @@ def login_send():
     return render_template("login_form.html", error_msg=result[1])
 
 
-@app.route("/articles/u/<int:id>")
+@app.route("/user/<int:id>")
 def get_articles_by_user(id):
-    sql = """
-        SELECT * FROM Users
-        WHERE Users.id = :id
-        """
-    result = db.session.execute(sql, {"id": id})
-    return str(result.fetchone())
+    result = user.get_articles_by_user(id)
+    if result[1] == False:
+        return redirect("/")
+
+    return render_template("user.html", articles=result[0], username=result[1])
 
 @app.route("/articles/post/<int:id>")
 def get_article(id):
     res = user.get_article(id)
-    print(res["content"])
     return render_template("post.html", written=res["written"], title=res["title"], author=res["author"], url=res["url"], username=res["username"], postdate=res["created_at"].date(), userid=res["creator"], content=res["content"])
 
 @app.route("/articles")
 def get_articles():
-    return redirect("/")
+    page = int(request.args.get("page"))
+    if not page:
+        return redirect("/")
+    result = user.get_articles(page)
+    articles = result[0]
+    last_page = result[2]
+    page = result[3]
+    return render_template("index.html", entries=articles, page=page, last_page=last_page)
 
 @app.route("/articles/new", methods=["POST"])
 def new_article_send():

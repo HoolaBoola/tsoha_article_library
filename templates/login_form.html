@@ -8,9 +8,9 @@
 <div class="row main-content text-center">
   <p> Already logged in!</p>
 </div>
-{% else %}
 
-</div><div class="row main-content text-center">
+{% else %}
+<div class="row main-content text-center">
   <div class="">
     <div class="container-fluid">
       <div class="row">
@@ -32,13 +32,13 @@
       <div class="row">
         <p>Don't have an account? <a href="/register">Register Here</a></p>
       </div>
+      {% if error_msg is defined %}
+      <p style="color: red"> <strong>{{ error_msg }} </strong></p>
+      {% endif %}
     </div>
   </div>
 </div>
-
 {% endif %}
 
-{% if error_msg is defined %}
-<p> {{ error_msg }} </p>
-{% endif %}
+
 {% endblock %}

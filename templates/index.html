@@ -8,14 +8,30 @@
   <p>Logged in as {{ session.username }}</p>
   {% else %}
   <p>You're not logged in</p>
+  {% endif %}
+  <br>
+  {% import "post_listing.html" as post %}
+  {% for entry in entries %}
+  <hr>
+  {{post.postlisting(entry["id"], entry["title"], entry["author"], entry["username"], entry["posterid"], entry["created_at"])}}
+  <br>
+  {% endfor %}
+
+  <div class="row justify-content-center container">
+    {% if page > 0 %}
+    <span style="align:left; margin-left: 20%" class="col">
+      <a href="/articles?page=0">First page</a>
+      <a href="/articles?page={{page - 1}}">Previous page</a>
+    </span>
     {% endif %}
-    <br>
-    {% import "post_listing.html" as post %}
-    {% for entry in entries %}
-    <hr>
-    {{post.postlisting(entry["id"], entry["title"], entry["author"], entry["username"], entry["posterid"], entry["created_at"])}}
-    <br>
-    {% endfor %}
-    {% endblock %}
+
+    {% if page < last_page %}
+    <span style="text-align: right; margin-right: 20%" class="col">
+      <a href="/articles?page={{page + 1}}">Next page</a>
+      <a href="/articles?page={{last_page}}">Last page</a>
+    </span>
+    {% endif %}
+  </div>  
+  {% endblock %}
 </div>
 
