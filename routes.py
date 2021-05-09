@@ -139,7 +139,9 @@ def delete_after_confirmation(id):
     if article["creator"] != session["userid"]:
         return render_template("error.html", msg="You are not authorized to do this!")
 
-    if request.form["delete"]:
+    print(request.form)
+
+    if request.form.get("delete"):
         user.delete_article(id)
 
     return redirect("/") 
