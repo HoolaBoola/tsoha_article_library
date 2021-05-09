@@ -13,7 +13,7 @@
   {% import "post_listing.html" as post %}
   {% for entry in entries %}
   <hr>
-  {{post.postlisting(entry["id"], entry["title"], entry["author"], entry["username"], entry["posterid"], entry["created_at"])}}
+  {{post.postlisting(entry["id"], entry["title"], entry["author"], entry["username"], entry["creator"], entry["created_at"])}}
   <br>
   {% endfor %}
 

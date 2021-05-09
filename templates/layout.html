@@ -12,9 +12,11 @@
         <li class="nav-item">
           <a class="nav-link" href="/articles/new">Post a new article</a>
         </li>
+        {% if session["username"] %}
         <li class="nav-item">
-          <a class="nav-link" href="/">Page 2</a>
+          <a class="nav-link" href="/user/{{session["userid"]}}">My posts</a>
         </li>
+         {% endif %}
         <li class="nav-item">
           <a class="nav-link" href="#">Page 3</a>
         </li>

@@ -1,8 +1,21 @@
 {% macro postlisting(id, title, author, username, posterid, postdate) -%}
-<p> Title: {% if title %} {{title}} {% else %} title not submitted {% endif %} </p>
-<p> Written by: {% if author %} {{ author }} {% else %} author not submitted {% endif %}
-<p> Posted by: <a href="/users/{{posterid}}">{{username}}</a> </p>
-<p> Posted: {{postdate.date()}} </p>
-<a href="/articles/post/{{id}}">Link</a>
-<br>
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <p> Title: {% if title %} {{title}} {% else %} title not submitted {% endif %} </p>
+      <p> Written by: {% if author %} {{ author }} {% else %} author not submitted {% endif %}
+      <p> Posted by: <a href="/users/{{posterid}}">{{username}}</a> </p>
+      <p> Posted: {{postdate.date()}} </p>
+      <a href="/articles/post/{{id}}">Link</a>
+    </div>
+
+    <div class="col-2">
+      {% if session["userid"] == posterid %}
+      <a class="btn" href="/articles/delete/{{id}}">Delete</a>
+      <a class="btn" href="/articles/edit/{{id}}">Edit</a>
+      {% endif %}
+      <br>
+    </div>
+  </div>
+</div>
 {%- endmacro %}

@@ -116,7 +116,7 @@ def get_article(id: int):
         FROM Articles
         JOIN Users ON
             Users.id = Articles.creator
-        WHERE articles.id = :id
+        WHERE articles.id = :id AND hidden = false
         """
     result = db.session.execute(sql, {"id": id})
     result = result.fetchone()
@@ -159,7 +159,7 @@ def get_articles_by_user(user_id):
     return (articles, username)
 
 def get_articles(page = 0):
-    page_size = 2
+    page_size = 20
     sql = """
         SELECT Count(*) FROM Articles
         """
@@ -182,7 +182,7 @@ def get_articles(page = 0):
             creator, 
             username
         FROM articles, users 
-        WHERE users.id = articles.creator
+        WHERE users.id = articles.creator AND hidden = false
         ORDER BY created_at DESC
         LIMIT :page_size
         OFFSET :articles
@@ -204,7 +204,7 @@ def result_to_article(res):
     article["url"] = res[4]
     article["content"] = res[5]
     article["created_at"] = res[6]
-    article["creator"] = res[7]
+    article["creator"] = int(res[7])
 
     if len(res) > 8:
         article["username"] = res[8]
@@ -229,3 +229,11 @@ def trafilatura_get_contents(url):
     content = ET.tostring(main, encoding="utf-8").decode("utf-8").replace("<main>", "").replace("</main>", "")
     return {"date": date, "excerpt": excerpt, "sitename": sitename, "title": title, "content": content}
 
+def delete_article(id):
+    sql = """
+        UPDATE Articles
+        SET hidden = true
+        WHERE id=:id
+        """
+    db.session.execute(sql, {"id": id})
+    db.session.commit()
