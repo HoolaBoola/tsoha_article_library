@@ -148,4 +148,26 @@ def edit_article(id):
     article = user.get_article(id)
     if article["creator"] != session["userid"]:
         return render_template("error.html", msg="You are not authorized to do this!")
+    print("id:", article["id"])
+    return render_template("edit_article.html", article=article)
+
+@app.route("/articles/edit/<int:id>", methods=["POST"])
+def edit_article_(id):
+    article = user.get_article(id)
+    if article["creator"] != session["userid"]:
+        return render_template("error.html", msg="You are not authorized to do this!")
+    
+    form = request.form
+    new = {}
+    new["id"] = id
+    new["title"] = form["title"] 
+    new["author"] = form["author"]
+    new["written"] = form["written"]
+    if not new["written"]:
+        new["written"] = None
+    new["url"] = form["url"]
+    new["content"] = form["content"]
+
+    user.edit_post(new)    
+    
     return redirect("/")

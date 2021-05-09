@@ -58,12 +58,11 @@ from html_sanitizer import Sanitizer
 sanitizer = Sanitizer({
     "tags": {
         "a", "h1", "h2", "h3", "strong", "em", "p", "ul", "ol",
-        "li", "br", "sub", "sup", "hr",
+        "li", "br", "sub", "sup", "hr", "code"
         },
     "attributes": {"a": ("href", "name", "target", "title", "id", "rel")},
     "empty": {"hr", "a", "br"},
     "separate": {"a", "p", "li"},
-    "whitespace": {"br"},
     "keep_typographic_whitespace": True,
     "add_nofollow": True,
     "autolink": False,
@@ -237,3 +236,21 @@ def delete_article(id):
         """
     db.session.execute(sql, {"id": id})
     db.session.commit()
+
+def edit_post(post):
+    post["content"] = sanitizer.sanitize(post["content"])
+    sql = """
+        UPDATE Articles 
+        SET
+            title=:title,
+            author=:author,
+            written=:written,
+            url=:url,
+            content=:content
+        WHERE id=:id
+        """
+    db.session.execute(sql, post)
+    db.session.commit()
+
+    return True
+
