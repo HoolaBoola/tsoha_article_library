@@ -7,7 +7,7 @@
 <p> By: {% if entry["author"] %} {{entry["author"]}} {% else %} Unknown author {% endif %}</p>
 <p> Published: {% if entry["written"] %} {{entry["written"]}} {% else %} - {% endif %}</p>
 <p> Source: {% if entry["url"] %} <a href="{{url}}"> {{entry["url"]}} </a> {% else %} - {% endif %} </p>
-<p> Posted by <a href="/users/{{entry["userid"]}}">{{entry["username"]}}</a> on {{entry["postdate"]}} </p>
+<p> Posted by <a href="/users/{{entry["userid"]}}">{{entry["username"]}}</a> on {{entry["created_at"].date()}} </p>
 
 <hr>
 {{entry["content"]|safe}}
