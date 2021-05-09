@@ -4,7 +4,7 @@
     <div class="col-6">
       <p> Title: {% if title %} {{title}} {% else %} title not submitted {% endif %} </p>
       <p> Written by: {% if author %} {{ author }} {% else %} author not submitted {% endif %}
-      <p> Posted by: <a href="/users/{{posterid}}">{{username}}</a> </p>
+      <p> Posted by: <a href="/user/{{posterid}}">{{username}}</a> </p>
       <p> Posted: {{postdate.date()}} </p>
       <a href="/articles/post/{{id}}">Link</a>
     </div>

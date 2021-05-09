@@ -36,6 +36,7 @@ def register_send():
 @app.route("/logout")
 def logout():
     del session["username"]
+    del session["userid"]
     return redirect("/")
 
 @app.route("/login")
